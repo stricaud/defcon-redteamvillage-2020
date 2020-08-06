@@ -7,7 +7,7 @@ RUN update-ca-certificates
 RUN pip3 install pcraft
 RUN apt -qy --no-install-recommends install tcpreplay suricata suricata-update curl wget
 RUN apt -qy --no-install-recommends install tshark 
-RUN apt -qy --no-install-recommends elpa-yaml-mode
+RUN apt -qy --no-install-recommends install elpa-yaml-mode
 RUN suricata-update
 WORKDIR /root/
 RUN wget https://rules.emergingthreats.net/open/suricata-5.0/emerging.rules.tar.gz
