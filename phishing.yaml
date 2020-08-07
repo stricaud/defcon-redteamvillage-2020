@@ -1,0 +1,35 @@
+start: vars
+
+vars:
+  _plugin: MakeVariables
+  victimip: 192.168.0.55
+  fakebankip: 185.199.108.153
+  _next: domaingen
+
+domaingen:
+  _plugin: GenerateNewDomain
+  _next: dnsreq
+  
+dnsreq:
+  _plugin: DNSConnection
+  ip-src: $victimip
+  ip-dst: $fakebankip
+  _next: fake
+  
+fake:
+  _plugin: FakeNames
+  orgdomain: redteamvillage.io
+  _next: httppost
+
+httppost:
+  _plugin: HTTPConnection
+  method: POST
+  content-type: application/x-www-form-urlencoded
+  content: login=$email&password=qwerty1234
+  _next: loop-1
+
+loop-1:
+  _start: fake
+  count: 3
+  _sleep: {"once-finished":0.3}
+  _next: done
