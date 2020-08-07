@@ -1,0 +1,6 @@
+start: hello
+
+hello:
+  _plugin: HelloWorldPlugin
+  _next: done
+  
