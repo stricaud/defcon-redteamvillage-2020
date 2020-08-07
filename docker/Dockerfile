@@ -2,7 +2,7 @@ FROM debian:bullseye
 MAINTAINER Sebastien Tricaud <sebastien@honeynet.org>
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update -q
-RUN apt -qy --no-install-recommends install git apt-transport-https ca-certificates pkg-config openssl libssl-dev jed python3-pip emacs-nox vim python3-scapy
+RUN apt -qy --no-install-recommends install git apt-transport-https ca-certificates pkg-config openssl libssl-dev jed python3-pip emacs-nox vim python3-scapy wamerican
 RUN update-ca-certificates
 RUN pip3 install pcraft
 RUN apt -qy --no-install-recommends install tcpreplay suricata suricata-update curl wget
