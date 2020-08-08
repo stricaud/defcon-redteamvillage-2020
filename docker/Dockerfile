@@ -11,5 +11,5 @@ RUN apt -qy --no-install-recommends install elpa-yaml-mode
 RUN suricata-update
 WORKDIR /root/
 RUN wget https://rules.emergingthreats.net/open/suricata-5.0/emerging.rules.tar.gz
-
+ADD _parser.py /usr/local/lib/python3.8/dist-packages/parsuricata/
 CMD ["sh", "-c", "tail -f /dev/null"]

@@ -1,0 +1,31 @@
+start: import
+
+import:
+  _plugin: PcapImport
+  filename: phishing.pcap
+  replace: {"ip": {"192.168.0.55": "10.0.43.2",
+                   "185.199.108.153": "172.16.38.5"
+           }}
+  _next: suricata
+
+suricata:
+  _plugin: Suricata
+  EXTERNAL_NET: 192.168.0.55
+  HTTP_SERVERS: 185.199.108.153
+  ip-dst: 185.199.108.153
+  domain: redteamvillage.io
+  rule: |
+    alert http $EXTERNAL_NET any -> $HTTP_SERVERS any (msg:"ET WEB_SERVER Possible Custom Content Type Manager WP Backdoor Access"; flow:established,to_server; http.uri; content:"/plugins/custom-content-type-manager/auto-update.php"; fast_pattern; nocase; reference:url,blog.sucuri.net/2016/03/when-wordpress-plugin-goes-bad.html; classtype:trojan-activity; sid:2022596; rev:4; metadata:created_at 2016_03_06, updated_at 2020_06_24;)
+  _next: dns
+
+dns:
+  _plugin: DNSConnection
+  domain: =@=fromcsv(sequential, fromcsv.csv, header=true, col=domain)=@=
+  _next: loop-1
+
+loop-1:
+  _start: dns
+  count: 2
+  _next: done
+
+  
