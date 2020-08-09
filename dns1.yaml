@@ -1,0 +1,13 @@
+start: newdomain
+
+newdomain:
+  _plugin: GenerateNewDomain
+  _next: dns1
+
+dns1:
+  _plugin: DNSConnection
+  resolver: 8.8.8.8
+  ip-dst: 185.199.108.153
+  _next: done
+
+                
